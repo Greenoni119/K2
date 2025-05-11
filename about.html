@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="cart.css">
+    <title>About - K2</title>
+</head>
+<body>
+    <div class="announcement-bar"></div>
+    <div class="logo-section">
+        <a href="index.html">
+            <img src="Images/logo.png" alt="Logo" class="main-logo">
+        </a>
+    </div>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="about.html" class="active">About</a>
+            <a href="objects.html">Object</a>
+            <a href="women.html">Women</a>
+        </div>
+        <div class="nav-right">
+            <a href="cart.html">cart<span class="cart-count"></span></a>
+        </div>
+    </nav>
+
+    <div class="about-container">
+        <div class="about-content">
+            <h1>Our Story</h1>
+            <p>K2 is more than just a store - it's a curated journey through unique items that transform houses into homes. Founded with a passion for discovering exceptional pieces that tell stories, we believe that every object has the power to make spaces feel special.</p>
+            
+            <div class="about-image">
+                <img src="Images/living.png" alt="K2 Aesthetic" class="feature-image">
+            </div>
+
+            <h2>Our Philosophy</h2>
+            <p>We carefully select each piece in our collection, focusing on quality, uniqueness, and the ability to bring character to your space. From handcrafted objects to carefully chosen women's accessories, every item is chosen with intention.</p>
+
+            <div class="values-grid">
+                <div class="value-item">
+                    <h3>Curated Selection</h3>
+                    <p>Each piece is personally selected to ensure quality and uniqueness.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Thoughtful Design</h3>
+                    <p>We believe in the power of design to transform everyday living.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Quality First</h3>
+                    <p>Every item meets our high standards for craftsmanship and durability.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay">
+        <div class="cart-header">
+            <h2>my cart</h2>
+            <button class="cart-close">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be inserted here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>subtotal</span>
+                <span class="subtotal-amount">$0.00</span>
+            </div>
+            <button class="checkout-button">CHECKOUT</button>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>

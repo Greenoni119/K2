@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="cart.css">
+    <title>K2</title>
+</head>
+<body>
+    <div class="announcement-bar"></div>
+    <div class="logo-section">
+        <img src="Images/logo.png" alt="Logo" class="main-logo">
+        <p class="tagline">Discover unique items for your home that will make you (and even your house) feel special</p>
+        <img src="Images/cactus.jpg" alt="Cactus" class="tagline-image">
+    </div>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="objects.html">Object</a>
+            <a href="women.html">Women</a>
+        </div>
+        <div class="nav-right">
+            <a href="cart.html">cart<span class="cart-count"></span></a>
+        </div>
+    </nav>
+
+    <section class="shop-category">
+        <h2 class="category-title">Shop By Category</h2>
+        <div class="category-grid">
+            <div class="category-item">
+                <a href="women.html">
+                <img src="Images/women.png" alt="Women's Category">
+                <h3 style="font-size: 40px;">WOMEN</h3>
+            </a>
+            </div>
+            <div class="category-item">
+                <a href="objects.html">
+                    <img src="Images/objects.png" alt="Objects Category">
+                    <h3 style="font-size: 40px;">OBJECTS</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-overlay">
+        <div class="cart-header">
+            <h2>my cart</h2>
+            <button class="cart-close">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be inserted here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>subtotal</span>
+                <span class="subtotal-amount">$0.00</span>
+            </div>
+            <button class="checkout-button">CHECKOUT</button>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+/* Product Detail Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier Prime", monospace;
+}
+
+.announcement-bar {
+    background-color: #C8B098;
+    color: #000;
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    height: 2rem;
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: white;
+    border-bottom: 1px solid #e6e1d6;
+}
+
+.nav-logo {
+    display: block;
+}
+
+.nav-logo img {
+    height: 40px;
+    width: auto;
+}
+
+.nav-center {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.nav-center a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+}
+
+.nav-center a.active {
+    text-decoration: underline;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.nav-right:before {
+    content: '';
+    height: 35px;
+    width: 1px;
+    background-color: #e6e1d6;
+    margin-right: 15px;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    text-transform: lowercase;
+}
+
+/* Product Detail Styles */
+.product-detail {
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.product-images {
+    display: grid;
+    gap: 20px;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.product-info {
+    padding-top: 40px;
+}
+
+.product-title {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    text-transform: lowercase;
+}
+
+.product-price {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.product-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.size-error {
+    color: #C8B098;
+    font-size: 14px;
+    margin: 10px 0;
+    display: none;
+}
+
+.size-selector {
+    margin: 30px 0;
+}
+
+.size-label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.size-options {
+    display: flex;
+    gap: 10px;
+}
+
+.size-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e6e1d6;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.size-btn.selected {
+    border-color: #000;
+}
+
+.add-to-cart {
+    width: 400px;
+    padding: 15px;
+    background-color: #C8B098;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.add-to-cart:hover {
+    opacity: 0.9;
+}
+
+.product-details {
+    margin-top: 40px;
+}
+
+.details-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.details-list {
+    list-style: none;
+    font-size: 14px;
+    color: #666;
+}
+
+.details-list li {
+    margin-bottom: 5px;
+}

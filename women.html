@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="women.css">
+    <link rel="stylesheet" href="cart.css">
+    <title>Women - K2</title>
+</head>
+<body class="subpage">
+    <div class="announcement-bar"></div>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="Index.html"><img src="Images/logo.png" alt="K2"></a>
+        </div>
+        <div class="nav-center">
+            <a href="about.html">About</a>
+            <a href="objects.html">Object</a>
+            <a href="women.html" class="active">Women</a>
+        </div>
+        <div class="nav-right">
+            <a href="/cart">cart<span class="cart-count"></span></a>
+        </div>
+    </nav>
+
+    <main class="products-page">
+        <header class="products-header">
+            <div class="products-filters">
+                <h1>WOMEN</h1>
+                <div class="sort-section">
+                    <span>featured:</span>
+                    <span>23 products</span>
+                </div>
+                <div class="view-options">
+                    <button class="view-btn">collage</button>
+                    <button class="view-btn active">grid</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <a href="product.html?id=cotton-dress">
+                    <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105" alt="Cotton Dress">
+                    <h3>summer cotton dress</h3>
+                    <p class="price">$185</p>
+                </a>
+            </div>
+            <div class="product-card">
+                <a href="product.html?id=denim-jacket">
+                    <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153" alt="Denim Jacket">
+                    <h3>vintage denim jacket</h3>
+                    <p class="price">$225</p>
+                </a>
+            </div>
+            <div class="product-card">
+                <a href="product.html?id=silk-blouse">
+                    <img src="https://images.unsplash.com/photo-1538329972958-465d6d2144ed" alt="Silk Blouse">
+                    <h3>silk blouse</h3>
+                    <p class="price">$165</p>
+                </a>
+            </div>
+            <div class="product-card">
+                <a href="product.html?id=wool-sweater">
+                    <img src="https://images.unsplash.com/photo-1551048632-24e444b48a3e" alt="Wool Sweater">
+                    <h3>merino wool sweater</h3>
+                    <p class="price">$195</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <div class="cart-overlay">
+        <div class="cart-header">
+            <h2>my cart</h2>
+            <button class="cart-close">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be inserted here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>subtotal</span>
+                <span class="subtotal-amount">$0.00</span>
+            </div>
+            <button class="checkout-button">CHECKOUT</button>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>
