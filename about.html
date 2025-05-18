@@ -19,13 +19,11 @@
         </a>
     </div>
     <nav class="navbar">
-        <div class="nav-links">
-            <a href="about.html" class="active">About</a>
-            <a href="objects.html">Object</a>
-            <a href="women.html">Women</a>
+        <div class="nav-center">
+            <!-- Navigation will be loaded here -->
         </div>
         <div class="nav-right">
-            <a href="cart.html">cart<span class="cart-count"></span></a>
+            <button class="cart-button">cart<span class="cart-count"></span></button>
         </div>
     </nav>
 
@@ -75,6 +73,12 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+    <script src="public-client.js"></script>
+    <script src="nav.js"></script>
     <script src="cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadNavigation);
+    </script>
 </body>
 </html>

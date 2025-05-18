@@ -15,12 +15,10 @@
             <a href="Index.html"><img src="Images/logo.png" alt="K2"></a>
         </div>
         <div class="nav-center">
-            <a href="about.html">About</a>
-            <a href="objects.html">Object</a>
-            <a href="women.html">Women</a>
+            <!-- Navigation will be loaded here -->
         </div>
         <div class="nav-right">
-            <a href="/cart">cart<span class="cart-count"></span></a>
+            <a href="#" class="cart-button">CART<span class="cart-count"></span></a>
         </div>
     </nav>
 
@@ -34,34 +32,39 @@
             <h1 class="product-title" id="productTitle"></h1>
             <p class="product-price" id="productPrice"></p>
             
-            <div class="product-description" id="productDescription">
-            </div>
-            
-            <div class="size-selector">
-                <label class="size-label">size:</label>
-                <p class="size-error">please select a size</p>
-                <div class="size-options">
-                    <button class="size-btn">30</button>
-                    <button class="size-btn">32</button>
-                    <button class="size-btn">34</button>
-                    <button class="size-btn">36</button>
-                    <button class="size-btn">38</button>
+            <div class="size-selector" id="sizeSelector" style="display: none;">
+                <label class="size-label">SIZE:</label>
+                <p class="size-error">Please select a size</p>
+                <div class="size-options" id="sizeOptions">
+                    <!-- Size buttons will be added dynamically -->
                 </div>
             </div>
             
-            <button class="add-to-cart">Add to Cart</button>
+            <div class="quantity-selector">
+                <label>QUANTITY:</label>
+                <div class="quantity-controls">
+                    <button class="quantity-btn minus">-</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn plus">+</button>
+                </div>
+            </div>
+            
+            <button class="add-to-cart-btn">ADD TO CART</button>
             
             <div class="product-details">
-                <h2 class="details-title">details</h2>
-                <ul class="details-list" id="productDetails">
+                <h2>DETAILS</h2>
+            <div class="product-description" id="productDescription">
+            </div>
+                <ul id="productDetails">
                 </ul>
             </div>
+            
         </div>
     </main>
 
     <div class="cart-overlay">
         <div class="cart-header">
-            <h2>my cart</h2>
+            <h2>MY CART</h2>
             <button class="cart-close">×</button>
         </div>
         <div class="cart-items">
@@ -69,167 +72,157 @@
         </div>
         <div class="cart-footer">
             <div class="cart-subtotal">
-                <span>subtotal</span>
+                <span>SUBTOTAL</span>
                 <span class="subtotal-amount">$0.00</span>
             </div>
             <button class="checkout-button">CHECKOUT</button>
         </div>
     </div>
 
+    <!-- Debug output -->
+    <div id="debug" style="background: #f8d7da; color: #721c24; padding: 1rem; margin: 1rem 0; display: none;"></div>
+
+    <!-- Load dependencies first -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+    <script src="public-client.js"></script>
+    <script src="nav.js"></script>
     <script src="cart.js"></script>
+    
+    <!-- Initialize everything after dependencies are loaded -->
     <script>
-        // Get product ID from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        
+        // Initialize state
+        const state = {
+            quantity: 1,
+            selectedSize: null,
+            product: null
+        };
+
         // Function to load product data
-        function loadProductData(productId) {
-            // In a real app, this would fetch from an API
-            // For now, we'll use hardcoded data
-            const products = {
-                // Objects
-                'canvas-apron': {
-                    title: 'the "cascabel" canvas apron',
-                    price: '$125',
-                    description: 'emil erwin in nashville spent years on their signature apron—designing the proprietary buckle, perfecting the fit, and sourcing the highest quality materials from american companies.',
-                    image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820',
-                    details: [
-                        '10oz horween latigo leather',
-                        '2" x 3" copper buckle',
-                        '1 3/8" belt width',
-                        'made in the usa'
-                    ]
-                },
-                'cotton-throw': {
-                    title: 'i+w x family heirloom weavers cotton throw in indigo',
-                    price: '$65',
-                    description: 'Handcrafted cotton throw blanket made in collaboration with Family Heirloom Weavers. Perfect blend of comfort and style.',
-                    image: 'https://images.unsplash.com/photo-1543248939-ff40856f65d4',
-                    details: [
-                        '100% cotton',
-                        'Handwoven in the USA',
-                        'Dimensions: 50" x 60"',
-                        'Machine washable'
-                    ]
-                },
-                'plus-candle': {
-                    title: 'the plus candle',
-                    price: '$65',
-                    description: 'Hand-poured soy wax candle with a unique blend of essential oils creating a warm, inviting atmosphere.',
-                    image: 'https://images.unsplash.com/photo-1514218953589-2d7d37efd2dc',
-                    details: [
-                        '100% soy wax',
-                        '60-hour burn time',
-                        'Hand-poured in Nashville',
-                        'Essential oil blend'
-                    ]
-                },
-                'leather-wallet': {
-                    title: 'handcrafted leather wallet',
-                    price: '$85',
-                    description: 'Minimalist leather wallet handcrafted from premium Horween leather. Features clean lines and practical design.',
-                    image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2',
-                    details: [
-                        'Horween leather',
-                        '6 card slots',
-                        'Cash compartment',
-                        'Hand-stitched in USA'
-                    ]
-                },
-                'ceramic-mug': {
-                    title: 'handmade ceramic mug',
-                    price: '$45',
-                    description: 'Artisan-crafted ceramic mug, each piece uniquely glazed and fired. Perfect for your morning coffee or tea.',
-                    image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7',
-                    details: [
-                        'Handcrafted stoneware',
-                        '12oz capacity',
-                        'Microwave and dishwasher safe',
-                        'Made in Nashville'
-                    ]
-                },
-                'leather-bag': {
-                    title: 'leather weekender bag',
-                    price: '$385',
-                    description: 'Premium leather weekender bag, perfect for short trips. Features durable construction and timeless design.',
-                    image: 'https://images.unsplash.com/photo-1547949003-9792a18a2601',
-                    details: [
-                        'Full-grain leather',
-                        'Brass hardware',
-                        'Interior laptop sleeve',
-                        'Handcrafted in USA'
-                    ]
-                },
-                // Women's
-                'cotton-dress': {
-                    title: 'summer cotton dress',
-                    price: '$185',
-                    description: 'Lightweight cotton dress perfect for summer days. Features a relaxed fit and timeless design.',
-                    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105',
-                    details: [
-                        '100% organic cotton',
-                        'Relaxed fit',
-                        'Side pockets',
-                        'Made in USA'
-                    ]
-                },
-                'denim-jacket': {
-                    title: 'vintage denim jacket',
-                    price: '$225',
-                    description: 'Classic denim jacket made from premium Japanese selvedge denim. Perfect for layering.',
-                    image: 'https://images.unsplash.com/photo-1551163943-3f6a855d1153',
-                    details: [
-                        'Japanese selvedge denim',
-                        'Copper hardware',
-                        'Interior pockets',
-                        'Hand-distressed'
-                    ]
-                },
-                'silk-blouse': {
-                    title: 'silk blouse',
-                    price: '$165',
-                    description: 'Elegant silk blouse with a relaxed fit. Perfect for both casual and formal occasions.',
-                    image: 'https://images.unsplash.com/photo-1538329972958-465d6d2144ed',
-                    details: [
-                        '100% silk',
-                        'Mother of pearl buttons',
-                        'Relaxed fit',
-                        'Dry clean only'
-                    ]
-                },
-                'wool-sweater': {
-                    title: 'merino wool sweater',
-                    price: '$195',
-                    description: 'Luxurious merino wool sweater. Incredibly soft and warm while maintaining breathability.',
-                    image: 'https://images.unsplash.com/photo-1551048632-24e444b48a3e',
-                    details: [
-                        '100% merino wool',
-                        'Ribbed cuffs and hem',
-                        'Regular fit',
-                        'Hand wash cold'
-                    ]
+        async function loadProductData(id) {
+            try {
+                const { data: product, error } = await publicSupabase
+                    .from('products')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error) {
+                    console.error('Error loading product:', error);
+                    return;
                 }
-            };
 
-            const product = products[productId];
-            if (product) {
-                document.getElementById('productTitle').textContent = product.title;
-                document.getElementById('productPrice').textContent = product.price;
+                if (!product) {
+                    console.error('Product not found');
+                    return;
+                }
+
+                state.product = product;
+
+                // Update product details
+                document.getElementById('productTitle').textContent = product.name;
+                document.title = `${product.name} - K2`;
+                document.getElementById('productPrice').textContent = `$${product.price}`;
+                
+                const productImage = document.getElementById('productImage');
+                productImage.src = product.image_url;
+                productImage.alt = product.name;
+                
                 document.getElementById('productDescription').textContent = product.description;
-                document.getElementById('productImage').src = product.image;
-                document.getElementById('productImage').alt = product.title;
 
+                // Handle sizes
+                const sizeSection = document.getElementById('sizeSelector');
+                if (product.sizes && product.sizes.length > 0) {
+                    const sizeOptions = document.getElementById('sizeOptions');
+                    sizeOptions.innerHTML = '';
+                    
+                    product.sizes.forEach(size => {
+                        const button = document.createElement('button');
+                        button.className = 'size-btn';
+                        button.dataset.size = size;
+                        button.textContent = size;
+                        button.onclick = () => selectSize(size, button);
+                        sizeOptions.appendChild(button);
+                    });
+                    
+                    sizeSection.style.display = 'block';
+                } else {
+                    sizeSelector.style.display = 'none';
+                }
+
+                // Update details
                 const detailsList = document.getElementById('productDetails');
-                detailsList.innerHTML = product.details.map(detail => `<li>${detail}</li>`).join('');
+                if (product.details && Array.isArray(product.details)) {
+                    detailsList.innerHTML = product.details
+                        .map(detail => `<li>${detail}</li>`)
+                        .join('');
+                }
+            } catch (err) {
+                console.error('Unexpected error:', err);
             }
         }
 
-        // Load product data when page loads
-        if (productId) {
-            loadProductData(productId);
+        // Function to select size
+        function selectSize(size, selectedButton) {
+            const sizeError = document.querySelector('.size-error');
+            const allSizeButtons = document.querySelectorAll('.size-btn');
+            
+            allSizeButtons.forEach(btn => btn.classList.remove('selected'));
+            selectedButton.classList.add('selected');
+            state.selectedSize = size;
+            sizeError.style.display = 'none';
         }
 
+        // Function to update quantity
+        function updateQuantity(change) {
+            const newQuantity = state.quantity + change;
+            if (newQuantity >= 1) {
+                state.quantity = newQuantity;
+                document.querySelector('.quantity').textContent = state.quantity;
+            }
+        }
 
+        // Function to add to cart
+        async function addToCart() {
+            const sizeSection = document.getElementById('sizeSelector');
+            const sizeError = document.querySelector('.size-error');
+
+            if (sizeSection.style.display !== 'none' && !state.selectedSize) {
+                sizeError.style.display = 'block';
+                return;
+            }
+
+            if (state.product) {
+                window.cart.addItem({
+                    id: state.product.id,
+                    title: state.product.name,
+                    price: state.product.price,
+                    image: state.product.image_url,
+                    quantity: state.quantity,
+                    size: state.selectedSize
+                });
+            }
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadNavigation();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            if (productId) {
+                await loadProductData(productId);
+            }
+
+            // Set up quantity controls
+            document.querySelector('.quantity-btn.minus')?.addEventListener('click', () => updateQuantity(-1));
+            document.querySelector('.quantity-btn.plus')?.addEventListener('click', () => updateQuantity(1));
+
+            // Set up add to cart
+            document.querySelector('.add-to-cart-btn')?.addEventListener('click', async () => {
+                await addToCart();
+                document.querySelector('.cart-overlay').classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>

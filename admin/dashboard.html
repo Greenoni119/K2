@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>K2 Admin Dashboard</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>K2 Admin</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="active"><a href="#products">Products</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </nav>
+
+        <main class="main-content">
+            <div id="productsSection" class="section active">
+                <div class="section-header">
+                    <h1>Products</h1>
+                    <button id="addProductBtn" class="primary-btn">Add New Product</button>
+                </div>
+                <div class="products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+
+            <div id="categoriesSection" class="section">
+                <div class="section-header">
+                    <h1>Categories</h1>
+                </div>
+                <button id="addCategoryBtn" class="primary-btn">Add New Category</button>
+                <div class="categories-grid">
+                    <!-- Categories will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Add/Edit Product Modal -->
+            <div id="productModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add New Product</h2>
+                        <button type="button" class="close-btn">&times;</button>
+                    </div>
+                    <div id="errorMessages" style="color: red; margin: 10px 0;"></div>
+                    <form id="productForm">
+                        <div class="form-group">
+                            <label for="productName">Product Name</label>
+                            <input type="text" id="productName" name="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Price</label>
+                            <input type="number" id="productPrice" name="productPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Category</label>
+                            <select id="productCategory" name="productCategory" required>
+                                <option value="women">Women</option>
+                                <option value="objects">Objects</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sizeType">Size Type</label>
+                            <select id="sizeType" name="sizeType">
+                                <option value="">No Sizes</option>
+                                <option value="shoes">Shoe Sizes</option>
+                                <option value="clothing">Clothing Sizes</option>
+                                <option value="pants">Pants Sizes</option>
+                            </select>
+                        </div>
+                        <div id="sizesContainer" class="form-group" style="display: none;">
+                            <label>Select Available Sizes</label>
+                            <div id="shoesSizes" class="size-options" style="display: none;">
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size5" name="sizes" value="5">
+                                    <label for="size5">5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size5_5" name="sizes" value="5.5">
+                                    <label for="size5_5">5.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size6" name="sizes" value="6">
+                                    <label for="size6">6</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size6_5" name="sizes" value="6.5">
+                                    <label for="size6_5">6.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size7" name="sizes" value="7">
+                                    <label for="size7">7</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size7_5" name="sizes" value="7.5">
+                                    <label for="size7_5">7.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size8" name="sizes" value="8">
+                                    <label for="size8">8</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size8_5" name="sizes" value="8.5">
+                                    <label for="size8_5">8.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size9" name="sizes" value="9">
+                                    <label for="size9">9</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size9_5" name="sizes" value="9.5">
+                                    <label for="size9_5">9.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size10" name="sizes" value="10">
+                                    <label for="size10">10</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size10_5" name="sizes" value="10.5">
+                                    <label for="size10_5">10.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size11" name="sizes" value="11">
+                                    <label for="size11">11</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size11_5" name="sizes" value="11.5">
+                                    <label for="size11_5">11.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size12" name="sizes" value="12">
+                                    <label for="size12">12</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size12_5" name="sizes" value="12.5">
+                                    <label for="size12_5">12.5</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size13" name="sizes" value="13">
+                                    <label for="size13">13</label>
+                                </div>
+                            </div>
+                            <div id="clothingSizes" class="size-options" style="display: none;">
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="sizeS" name="sizes" value="S">
+                                    <label for="sizeS">S</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="sizeM" name="sizes" value="M">
+                                    <label for="sizeM">M</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="sizeL" name="sizes" value="L">
+                                    <label for="sizeL">L</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="sizeXL" name="sizes" value="XL">
+                                    <label for="sizeXL">XL</label>
+                                </div>
+                            </div>
+                            <div id="pantsSizes" class="size-options" style="display: none;">
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size02" name="sizes" value="02">
+                                    <label for="size02">02</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size04" name="sizes" value="04">
+                                    <label for="size04">04</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size06" name="sizes" value="06">
+                                    <label for="size06">06</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size08" name="sizes" value="08">
+                                    <label for="size08">08</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size10" name="sizes" value="10">
+                                    <label for="size10">10</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size12" name="sizes" value="12">
+                                    <label for="size12">12</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size14" name="sizes" value="14">
+                                    <label for="size14">14</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size16" name="sizes" value="16">
+                                    <label for="size16">16</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size18" name="sizes" value="18">
+                                    <label for="size18">18</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size20" name="sizes" value="20">
+                                    <label for="size20">20</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size22" name="sizes" value="22">
+                                    <label for="size22">22</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size24" name="sizes" value="24">
+                                    <label for="size24">24</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size26" name="sizes" value="26">
+                                    <label for="size26">26</label>
+                                </div>
+                                <div class="size-checkbox">
+                                    <input type="checkbox" id="size28" name="sizes" value="28">
+                                    <label for="size28">28</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Description</label>
+                            <textarea id="productDescription" name="productDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">Image</label>
+                            <input type="file" id="productImage" name="productImage" accept="image/*">
+                        </div>
+                        <button type="submit" class="primary-btn">Save Product</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add/Edit Category Modal -->
+            <div id="categoryModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add New Category</h2>
+                        <button type="button" class="close-btn">&times;</button>
+                    </div>
+                    <div id="categoryErrorMessages" style="color: red; margin: 10px 0;"></div>
+                    <form id="categoryForm">
+                        <div class="form-group">
+                            <label for="categoryName">Category Title (displayed on image)</label>
+                            <input type="text" id="categoryName" name="categoryName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categorySlug">Category Slug (URL-friendly name)</label>
+                            <input type="text" id="categorySlug" name="categorySlug" placeholder="e.g., womens-shoes" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryImage">Category Image (large banner image)</label>
+                            <input type="file" id="categoryImage" name="categoryImage" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="primary-btn">Save Category</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

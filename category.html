@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="objects.css">
+    <link rel="stylesheet" href="cart.css">
+    <title>Category - K2</title>
+</head>
+<body class="subpage">
+    <div class="announcement-bar"></div>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="Index.html"><img src="Images/logo.png" alt="K2" /></a>
+        </div>
+        <div class="nav-center">
+            <a href="about.html">About</a>
+            <div id="categoryLinks" class="nav-links"></div>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="cart-button">CART<span class="cart-count"></span></a>
+        </div>
+    </nav>
+
+    <main class="products-page">
+        <header class="products-header">
+            <div class="products-filters">
+                <h1 id="categoryTitle">CATEGORY</h1>
+                <div class="sort-section">
+                    <span>Featured:</span>
+                    <span>0 products</span>
+                </div>
+                <div class="view-options">
+                    <button class="view-btn">collage</button>
+                    <button class="view-btn active">grid</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="products-grid grid-view" id="productsGrid">
+            <!-- Products will be loaded here -->
+        </div>
+    </main>
+
+    <div class="cart-overlay">
+        <div class="cart-header">
+            <h2>my cart</h2>
+            <button class="cart-close">×</button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be inserted here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>subtotal</span>
+                <span class="subtotal-amount">$0.00</span>
+            </div>
+            <button class="checkout-button">CHECKOUT</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+    <script src="public-client.js"></script>
+    <script src="cart.js"></script>
+    <script>
+        // Initialize Supabase client
+        const supabase = publicSupabase;
+
+        // Get category from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const categorySlug = urlParams.get('category');
+        console.log('Category slug:', categorySlug);
+
+        if (!categorySlug) {
+            window.location.href = 'index.html';
+        }
+
+        // Update page title
+        document.title = `${categorySlug.toUpperCase()} - K2`;
+        document.getElementById('categoryTitle').textContent = categorySlug.toUpperCase();
+
+        // Load categories for navigation
+        async function loadCategories() {
+            console.log('Loading categories...');
+            const { data: categories, error } = await supabase
+                .from('categories')
+                .select('*')
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                console.error('Error loading categories:', error);
+                return;
+            }
+
+            console.log('Categories loaded:', categories);
+            const categoryLinks = document.getElementById('categoryLinks');
+            categories.forEach(category => {
+                const link = document.createElement('a');
+                link.href = `category.html?category=${category.slug}`;
+                link.textContent = category.name;
+                if (category.slug === categorySlug) {
+                    link.classList.add('active');
+                }
+                categoryLinks.appendChild(link);
+            });
+        }
+
+        // Function to load products
+        async function loadProducts() {
+            console.log('Loading products for category:', categorySlug);
+            const { data: products, error } = await supabase
+                .from('products')
+                .select('*')
+                .eq('category', categorySlug.toLowerCase());
+
+            if (error) {
+                console.error('Error loading products:', error);
+                return;
+            }
+
+            console.log('Products loaded:', products);
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <a href="product.html?id=${product.id}">
+                        <img src="${product.image_url}" alt="${product.name}" />
+                        <h3>${product.name}</h3>
+                        <p class="price">$${product.price}</p>
+                    </a>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // Update product count
+            document.querySelector('.sort-section span:last-child').textContent = `${products.length} products`;
+        }
+
+        // Initialize page
+        async function initializePage() {
+            if (categorySlug) {
+                await loadCategories();
+                await loadProducts();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Start initialization
+        initializePage();
+
+        // Update navigation to highlight current category
+        document.querySelectorAll('.nav-center a').forEach(link => {
+            if (link.textContent.toLowerCase() === categorySlug) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

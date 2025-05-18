@@ -1,0 +1,456 @@
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid #e6e1d6;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-header {
+    padding: 20px 0;
+    border-bottom: 1px solid #e6e1d6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar-header h2 {
+    color: #333;
+    font-weight: normal;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.nav-menu {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.nav-menu li {
+    margin-bottom: 10px;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 12px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.nav-menu li.active a,
+.nav-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+.logout-btn {
+    background-color: transparent;
+    color: #333;
+    border: 1px solid #e6e1d6;
+}
+
+.logout-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    margin-left: 250px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    width: calc(100% - 250px);
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Section Header */
+.section-header {
+    margin-bottom: 20px;
+}
+
+#categoriesSection .primary-btn {
+    margin-bottom: 30px;
+}
+
+.section-header h1 {
+    font-size: 24px;
+    font-weight: normal;
+    color: #333;
+}
+
+/* Categories Section */
+.categories-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.category-card {
+    flex: 0 1 calc(33.333% - 20px);
+    min-width: 300px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 60%; /* 3:5 aspect ratio */
+    overflow: hidden;
+}
+
+.category-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-title {
+    color: white;
+    font-size: 24px;
+    font-weight: normal;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.category-details {
+    padding: 20px;
+}
+
+.category-info {
+    margin-bottom: 15px;
+}
+
+.category-name {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.category-slug {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.category-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.category-actions button {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.category-actions .edit-btn {
+    background-color: #e6e1d6;
+    color: #333;
+}
+
+.category-actions .delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.category-actions .edit-btn:hover {
+    background-color: #d6d1c6;
+}
+
+.category-actions .delete-btn:hover {
+    background-color: #c82333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.primary-btn {
+    background-color: #C8B098;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background-color: #b9a089;
+}
+
+.products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.product-card {
+    flex: 0 0 calc(33.333% - 17px); /* 3 cards per row with gap */
+    min-width: 300px; /* Minimum width for smaller screens */
+    max-width: 400px; /* Maximum width for larger screens */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .product-card {
+        flex: 0 0 calc(50% - 13px); /* 2 cards per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card {
+        flex: 0 0 100%; /* 1 card per row */
+    }
+}
+
+.product-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.product-details {
+    padding: 20px;
+    background: white;
+    position: relative;
+    z-index: 1;
+}
+
+.product-name {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.product-price {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.product-actions button {
+    flex: 1;
+    padding: 8px 0;
+    border: none;
+    border-radius: 4px;
+    background-color: #C8B098;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.product-actions button:hover {
+    background-color: #b9a089;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    margin: 0 auto;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-right: 40px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    z-index: 1002;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    background-color: #f5f5f5;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #e6e1d6;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+/* Size options styles */
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.size-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #e6e1d6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.size-checkbox:hover {
+    background-color: #f5f5f5;
+}
+
+.size-checkbox input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
+
+.size-checkbox input[type="checkbox"]:checked + label {
+    font-weight: bold;
+    color: #C8B098;
+}
+
+.size-checkbox:has(input[type="checkbox"]:checked) {
+    border-color: #C8B098;
+    background-color: #f9f6f4;
+}

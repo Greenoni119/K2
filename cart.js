@@ -8,33 +8,53 @@ class Cart {
     init() {
         this.updateCartCount();
         this.updateCartContents();
-        this.setupCartToggle();
-        this.setupCartClose();
+        this.setupCartEvents();
     }
 
-    setupCartToggle() {
-        const cartLinks = document.querySelectorAll('.nav-right a');
-        cartLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+    setupCartEvents() {
+        // Handle all cart-related clicks
+        document.addEventListener('click', (e) => {
+            // Open cart when cart button is clicked
+            const cartButton = e.target.closest('.cart-button');
+            if (cartButton) {
                 e.preventDefault();
-                document.querySelector('.cart-overlay').classList.add('active');
-            });
-        });
-    }
+                const overlay = document.querySelector('.cart-overlay');
+                if (overlay) {
+                    overlay.classList.add('active');
+                }
+            }
+            
+            // Close cart when close button is clicked
+            const closeButton = e.target.closest('.cart-close');
+            if (closeButton) {
+                const overlay = document.querySelector('.cart-overlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                }
+            }
 
-    setupCartClose() {
-        const closeBtn = document.querySelector('.cart-close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                document.querySelector('.cart-overlay').classList.remove('active');
+            // Close cart when clicking outside
+            if (e.target.classList.contains('cart-overlay')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Prevent clicks inside cart from closing it
+        const cartItems = document.querySelector('.cart-items');
+        if (cartItems) {
+            cartItems.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         }
     }
 
     addItem(item) {
-        const existingItem = this.items.find(i => i.id === item.id && i.size === item.size);
+        const existingItem = this.items.find(i => 
+            i.id === item.id && 
+            (item.size === null ? i.size === null : i.size === item.size)
+        );
         if (existingItem) {
-            existingItem.quantity += 1;
+            existingItem.quantity += item.quantity;
         } else {
             this.items.push(item);
         }
@@ -86,76 +106,35 @@ class Cart {
                         <img src="${item.image}" alt="${item.title}">
                         <div class="item-title-price">
                             <h3>${item.title}</h3>
-                            <div class="item-details">
-                                <p class="item-size">size: ${item.size}</p>
-                                <p class="price">${item.price}</p>
-                            </div>
+                            ${item.size ? `<p class="item-size">SIZE: ${item.size}</p>` : ''}
+                            <p class="price">${item.price}</p>
                         </div>
                     </a>
                     <div class="item-controls">
-                        <button class="remove-btn" onclick="cart.removeItem(${index})">REMOVE</button>
                         <div class="quantity-controls">
-                            <span>QTY: </span>
-                            <div class="qty-spinner">
-                                <span class="qty-display">${item.quantity}</span>
-                                <div class="qty-buttons">
-                                    <button class="qty-btn" onclick="cart.updateQuantity(${index}, 1)">∧</button>
-                                    <button class="qty-btn" onclick="cart.updateQuantity(${index}, -1)">∨</button>
-                                </div>
-                            </div>
+                            <button class="quantity-btn minus" onclick="event.preventDefault(); window.cart.updateQuantity(${index}, -1)">-</button>
+                            <input type="text" class="quantity" value="${item.quantity}" readonly>
+                            <button class="quantity-btn plus" onclick="event.preventDefault(); window.cart.updateQuantity(${index}, 1)">+</button>
                         </div>
+                        <button class="remove-btn" onclick="window.cart.removeItem(${index})">REMOVE</button>
                     </div>
                 </div>
             </div>
         `).join('');
 
-        const subtotal = this.items.reduce((sum, item) => sum + (parseFloat(item.price.replace('$', '')) * item.quantity), 0);
+        const subtotal = this.items.reduce((sum, item) => {
+            // Handle both string prices (with $) and number prices
+            const price = typeof item.price === 'string' ? 
+                parseFloat(item.price.replace('$', '')) : 
+                item.price;
+            return sum + (price * item.quantity);
+        }, 0);
         subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
     }
 }
 
-// Initialize cart
-const cart = new Cart();
-
-// Add to cart functionality for product pages
+// Initialize cart when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Setup size buttons
-    const sizeButtons = document.querySelectorAll('.size-btn');
-    const sizeError = document.querySelector('.size-error');
-
-    sizeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            sizeButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            if (sizeError) sizeError.style.display = 'none';
-        });
-    });
-
-    const addToCartBtn = document.querySelector('.add-to-cart');
-    if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', () => {
-            const selectedSize = document.querySelector('.size-btn.selected');
-            const sizeError = document.querySelector('.size-error');
-            
-            if (!selectedSize) {
-                sizeError.style.display = 'block';
-                return;
-            }
-            sizeError.style.display = 'none';
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            const item = {
-                id: productId,
-                title: document.querySelector('.product-title').textContent,
-                price: document.querySelector('.product-price').textContent,
-                image: document.querySelector('.main-image').src,
-                size: selectedSize.textContent,
-                quantity: 1
-            };
-
-            cart.addItem(item);
-            document.querySelector('.cart-overlay').classList.add('active');
-        });
-    }
+    window.cart = new Cart();
 });
+
